@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 
 Description: |
-  This CloudFormation template creates an ASG behind an ALB
+  This temp creates an ASG behind an ALB.  
 
 Parameters:
 
@@ -59,12 +59,12 @@ Resources:
           TargetGroupArn: !Ref myTG
       LoadBalancerArn: !Ref myALB # Required
       Port: 80
-      Protocol: HTTP
+      Protocol: HTTP  
 
   myASG:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      AvailabilityZones: !GetAZs
+      AvailabilityZones: !GetAZs 
       DesiredCapacity: "2"
       HealthCheckGracePeriod: 90
       HealthCheckType: ELB
@@ -90,7 +90,7 @@ Resources:
     Type: AWS::EC2::LaunchTemplate
     Properties:
       LaunchTemplateData:
-        ImageId: !FindInMap
+        ImageId: !FindInMap 
           - RegionImageMap
           - !Ref AWS::Region
           - AMI
@@ -105,7 +105,7 @@ Resources:
           TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
           && PRIVATE_IP=`curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/local-ipv4`
           TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
-          && PUBLIC_IP=`curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/public-ipv4`
+          && PUBLIC_IP=`curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/public-ipv4` 
           DATE_TIME=`date`
           chmod -R 777 /var/www/html
           echo "<html>
@@ -113,7 +113,7 @@ Resources:
               <title> Congratulations! You have created an instance from Launch Template</title>
           </head>
           <body>
-              <h1>This web server is launched from launch template by de156397</h1>
+              <h1>This web server is launched from launch template by YOUR_NAME</h1>
               <p>This instance is created at <b>$DATE_TIME</b></p>
               <p>Private IP address of this instance is <b>$PRIVATE_IP</b></p>
               <p>Public IP address of this instance is <b>$PUBLIC_IP</b></p>
@@ -151,8 +151,9 @@ Resources:
 Outputs:
 
   ALBURL:
-    Description: URL of the ALB
-    Value: !Join
+    Description: URL of the ALB 
+    Value: !Join 
       - ''
       - - 'http://'
         - !GetAtt myALB.DNSName
+  

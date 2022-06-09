@@ -79,7 +79,7 @@ Resources:
   myCPUPolicy:
     Type: AWS::AutoScaling::ScalingPolicy
     Properties:
-      AutoScalingGroupName: !Ref myASG  # Required
+      AutoScalingGroupName: !Ref myASG # Required
       PolicyType: TargetTrackingScaling
       TargetTrackingConfiguration:
         PredefinedMetricSpecification:

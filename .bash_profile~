@@ -22,26 +22,18 @@
 ## 1869 ssh-agent
 ## 2556 ssh-agent
 
-function clean_agents {
-	local -i nPID=0
-	local strSocket="" strSocketDir=""
-	while read nPID
-	do
-		strSocket=$( find /tmp -maxdepth 2 -user $(id -un) -type s -name agent.$(( nPID - 1 )) 2>/dev/null )
-		kill $nPID
-		sleep 1
-		if [[ -S $strSocket ]]
-		then
-			strSocketDir=${strSocket%/agent.$(( nPID - 1 ))}
-			{ rm $strSocket && rmdir $strSocketDir; } 2>/dev/null
-		fi
-
-	done <<< "$( ps -u $( id -un ) | sed -ne '/ssh-agent/{;s/ *\([0-9][0-9]*\).*ssh-agent.*$/\1/;p;}' )"
+function ssh-agent_clean {
+	local ssh_agent_pid="$1"
+	local ssh_auth_sock=${2:-$( find /tmp -maxdepth 2 -type s -name agent.$((ssh_agent_pid - 1 )) 2>/dev/null )}
+	local ssh_auth_dir=${ssh_auth_sock%/agent.*}
+	[[ -n "$ssh_agent_pid" ]] && ps -p $ssh_agent_pid &> /dev/null && kill $ssh_agent_pid || :
+	## on termination ssh-agent is supposed to clear socket file and /tmp/ssh-* subfolder
+	[[ -s "$ssh_auth_sock" ]] && rm $ssh_auth_sock 2>/dev/null || :
+	[[ -d "${ssh_auth_dir}" ]] && rmdir ${ssh_auth_dir} 2>/dev/null || :
 	return 0
 }
-##
-function list_identities {
-}
+
+function  ssh-agent_check {
 	local ssh_agent_pid=$1
 	local ssh_auth_sock=$(find /tmp -maxdepth 2 -type s -name agent.$((ssh_agent_pid - 1 )) 2>/dev/null )
 	local success="0" error="1"
@@ -124,6 +116,8 @@ do
 		unset pid aAgent nAgentIndex
 		;;
 	"ssh-agent_boot")
+		## kill any stray ssh-agent and consider there is no pkill and only a poor ps command on Git-Bash available
+		ps -u $(id -un) | sed -ne '/ssh-agent/{;s/ *\([0-9][0-9]*\).*ssh-agent.*$/\1/;p;}' | xargs -rI pid kill pid
 		## remove any orphaned socket file
 		find /tmp -maxdepth 1 -user $(id -un) -type d -name ssh-\* 2>/dev/null | xargs -rI dir find dir -type s -delete
 		## remove any empty ssh socket dir
