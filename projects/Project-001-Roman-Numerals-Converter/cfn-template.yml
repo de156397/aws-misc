@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  CloudFormation template for resources to build Roman Numerals Flask App.
+  Includes infrastructure and code deployment.
+Parameters:
+  pKeyName:
+    Description: Name of key pair
+    Type: AWS::EC2::KeyPair::KeyName
+  pInstanceType:
+    Description: Instance type to use
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+    - t2.micro
+    - t3.micro
+Resources:
+  rSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Allow SSH and HTTP' # Required
+      GroupName: 'Allow SSH and HTTP'
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+  rFlaskServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: String
+      InstanceType: String
+      KeyName: String
+      SecurityGroupIds:
+        - String
+      Tags:
+        - Tag
+      UserData: String
+#Outputs:
