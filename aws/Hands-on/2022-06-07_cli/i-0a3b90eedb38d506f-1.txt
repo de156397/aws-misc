@@ -1,0 +1,107 @@
+Reservations:
+- Groups: []
+  Instances:
+  - AmiLaunchIndex: 0
+    Architecture: x86_64
+    BlockDeviceMappings:
+    - DeviceName: /dev/xvda
+      Ebs:
+        AttachTime: '2022-06-14T14:04:00+00:00'
+        DeleteOnTermination: true
+        Status: attached
+        VolumeId: vol-0ade93e8354201400
+    CapacityReservationSpecification:
+      CapacityReservationPreference: open
+    ClientToken: 1160764f-db0d-4c18-9857-447101effd7a
+    CpuOptions:
+      CoreCount: 1
+      ThreadsPerCore: 1
+    EbsOptimized: false
+    EnaSupport: true
+    EnclaveOptions:
+      Enabled: false
+    HibernationOptions:
+      Configured: false
+    Hypervisor: xen
+    ImageId: ami-0022f774911c1d690
+    InstanceId: i-0a3b90eedb38d506f
+    InstanceType: t2.micro
+    KeyName: ec2
+    LaunchTime: '2022-06-14T14:03:59+00:00'
+    MaintenanceOptions:
+      AutoRecovery: default
+    MetadataOptions:
+      HttpEndpoint: enabled
+      HttpProtocolIpv6: disabled
+      HttpPutResponseHopLimit: 1
+      HttpTokens: optional
+      InstanceMetadataTags: disabled
+      State: applied
+    Monitoring:
+      State: disabled
+    NetworkInterfaces:
+    - Association:
+        IpOwnerId: amazon
+        PublicDnsName: ec2-54-147-155-78.compute-1.amazonaws.com
+        PublicIp: 54.147.155.78
+      Attachment:
+        AttachTime: '2022-06-14T14:03:59+00:00'
+        AttachmentId: eni-attach-040b8224eea856384
+        DeleteOnTermination: true
+        DeviceIndex: 0
+        NetworkCardIndex: 0
+        Status: attached
+      Description: ''
+      Groups:
+      - GroupId: sg-07180ac89ebe52350
+        GroupName: default
+      InterfaceType: interface
+      Ipv6Addresses: []
+      MacAddress: 12:bf:6e:68:4e:13
+      NetworkInterfaceId: eni-079add410126a8e6e
+      OwnerId: '556724367905'
+      PrivateDnsName: ip-172-31-87-204.ec2.internal
+      PrivateIpAddress: 172.31.87.204
+      PrivateIpAddresses:
+      - Association:
+          IpOwnerId: amazon
+          PublicDnsName: ec2-54-147-155-78.compute-1.amazonaws.com
+          PublicIp: 54.147.155.78
+        Primary: true
+        PrivateDnsName: ip-172-31-87-204.ec2.internal
+        PrivateIpAddress: 172.31.87.204
+      SourceDestCheck: true
+      Status: in-use
+      SubnetId: subnet-054de6f31acf8ce18
+      VpcId: vpc-0327932cf6c0bb0c2
+    Placement:
+      AvailabilityZone: us-east-1b
+      GroupName: ''
+      Tenancy: default
+    PlatformDetails: Linux/UNIX
+    PrivateDnsName: ip-172-31-87-204.ec2.internal
+    PrivateDnsNameOptions:
+      EnableResourceNameDnsAAAARecord: false
+      EnableResourceNameDnsARecord: false
+      HostnameType: ip-name
+    PrivateIpAddress: 172.31.87.204
+    ProductCodes: []
+    PublicDnsName: ec2-54-147-155-78.compute-1.amazonaws.com
+    PublicIpAddress: 54.147.155.78
+    RootDeviceName: /dev/xvda
+    RootDeviceType: ebs
+    SecurityGroups:
+    - GroupId: sg-07180ac89ebe52350
+      GroupName: default
+    SourceDestCheck: true
+    State:
+      Code: 16
+      Name: running
+    StateTransitionReason: ''
+    SubnetId: subnet-054de6f31acf8ce18
+    UsageOperation: RunInstances
+    UsageOperationUpdateTime: '2022-06-14T14:03:59+00:00'
+    VirtualizationType: hvm
+    VpcId: vpc-0327932cf6c0bb0c2
+  OwnerId: '556724367905'
+  ReservationId: r-0a5f29e00c6379c21
