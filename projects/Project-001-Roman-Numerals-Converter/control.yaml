@@ -12,7 +12,13 @@ Parameters:
     Default: t2.micro
     AllowedValues:
     - t2.micro
-    - t3.micro
+    - t3.micro 
+
+  pAmiId:
+    Description: AMI to use
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-kernel-5.10-hvm-x86_64-ebs'
+
 Resources:
   rSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -20,22 +26,24 @@ Resources:
       GroupDescription: 'Allow SSH and HTTP' # Required
       GroupName: 'Allow SSH and HTTP'
       SecurityGroupIngress:
-      - IpProtocol: tcp
+      -
+        IpProtocol: tcp
         FromPort: 22
         ToPort: 22
         CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp
+      -
+        IpProtocol: tcp
         FromPort: 80
         ToPort: 80
         CidrIp: 0.0.0.0/0
   rFlaskServer:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0cff7528ff583bf9a
-      InstanceType: !Ref pInstanceType 
-      KeyName: !Ref pKeyName 
+      ImageId: !Ref pAmiId
+      InstanceType: !Ref pInstanceType
+      KeyName: !Ref pKeyName
       SecurityGroupIds:
-        - !Ref rSecurityGroup 
+        - !Ref rSecurityGroup
       Tags:
         - Key: Name
           Value: cfn-flask-server
@@ -51,11 +59,10 @@ Resources:
         wget ${FOLDER}/templates/index.html
         wget ${FOLDER}/templates/result.html
         cd ..
-        python3 app.py 
-
-Outputs: 
-  WebSiteURL: 
+        python3 app.py
+Outputs:
+  WebsiteURL:
     Description: URL of the website
-    Value: !Sub 
-    - http://${PublicAddress} 
+    Value: !Sub
+    - http://${PublicAddress}
     - PublicAddress: !GetAtt rFlaskServer.PublicDnsName
